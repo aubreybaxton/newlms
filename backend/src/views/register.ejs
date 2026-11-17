@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="header">
+            <h1>Register Student</h1>
+         
+        </div>
+
+        <form action="/create" method="post">
+
+            <h3 class="section-title">Add New Employee</h3>
+
+            <div class="form-group">
+                <label>Studnet Name</label>
+                <input type="text" name="name" class="name" placeholder="Enter your name" required>
+            </div>
+
+            <div class="form-group">
+                <label>Contact Number</label>
+                <input type="number" name="number" class="number" placeholder="Enter your number" required>
+            </div>
+
+              <div class="form-group">
+                <label>Enter Email</label>
+                <input type="text" name="email" class="email" placeholder="Enter your email" required>
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <input type="text" name="password" class="password" placeholder="Enter your password" required>
+            </div>
+
+            <div class="form-group">
+                <label>Cours</label>
+                <select name="cours" class="cours">
+                    <option value="mern">Mern</option>
+                    <option value="python">Python</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Batch</label>
+                <select name="batch" class="batch">
+                    <option value="weekdays">Weekdays</option>
+                    <option value="weekend">Weekend</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Gender</label>
+                <select name="gender" class="gender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+
+            <button type="submit" class="save">
+                Creat Student
+            </button>
+
+        </form>
+
+        <div class="actions">
+
+            <h3 class="section-title">Student Manage</h3>
+
+            <div class="action-grid">
+
+                <form action="/delete">
+                    <button type="submit" class="delete">
+                        Remove Student
+                    </button>
+                </form>
+
+                <form action="/read">
+                    <button type="submit" class="read">
+                        See all Students
+                    </button>
+                </form>
+
+                <form action="/update">
+                    <button type="submit" class="update">
+                        Update Student Details
+                    </button>
+                </form>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</body>
+<script>
+    let name = document.querySelector(".name")
+    let number = document.querySelector(".number")
+    let gender = document.querySelector(".gender")
+    let password = document.querySelector(".password")
+    let email = document.querySelector(".email")
+    document.querySelector(".save").addEventListener("click", async () => {
+        let user = await fetch("/create", { method: "post" });
+        name.value = "";
+        number.value = "";
+        gender.value = "";
+        password.value = "";
+        email.value = "";
+    })
+</script>
+
+</html>
