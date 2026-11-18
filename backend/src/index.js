@@ -1,23 +1,41 @@
+import express from "express";
+import 'dotenv/config'
+import mongoose from "mongoose";
+import path from "path";
+import cookieParser from "cookie-parser";
+import { fileURLToPath } from "url";
 
-// import express from "express";
-// import cors from "cors";
-// import dotenv from "dotenv";
+import studentRegister from "./routes/studentRegister.js";
+import studentLogin from "./routes/studentLogin.js";
+import studentDelete from "./routes/studentDelete.js";
+import studentUpdate from "./routes/studentUpdate.js";
+import studentRead from "./routes/studentRead.js";
+const PORT = 3000;
 
-// dotenv.config();
 
-// const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-// app.use(cors());
-// app.use(express.json());
+const app = express();
 
-// app.get("/", (req, res) => {
-//     res.json({
-//         message: "Node.js server is running!"
-//     });
-// });
 
-// const PORT = process.env.PORT || 3000;
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
-// app.listen(PORT, () => {
-//     console.log(`Server running on port ${PORT}`);
-// });
+app.use(express.static(path.join(__dirname, "public")));
+
+// MongoDB connection
+mongoose.connect(process.env.Dbcont)
+    .then(() => console.log("MongoDB Connected"))
+    .catch(error => console.log(error));
+
+// Routes connection
+app.use("/register", studentRegister);
+app.use("/login", studentLogin);
+
+
+
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
