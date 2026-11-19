@@ -5,13 +5,13 @@ import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
+router.get("/login", (req, res) => {
     res.sendFile("login.html", {
         root: "src/public"
     });
 });
 
-router.post("/", async (req, res) => {
+router.post("/login", async (req, res) => {
     try {
         const e = await student.findOne({
             email: req.body.email
@@ -30,6 +30,8 @@ router.post("/", async (req, res) => {
             return res.send("Wrong password");
         }
 
+
+
         const token = jwt.sign(
             { email: e.email },
             process.env.JWT_SECRET
@@ -39,6 +41,13 @@ router.post("/", async (req, res) => {
             httpOnly: true,
             sameSite: "lax"
         });
+
+      req.session.student = {
+        
+        name: e.name,
+        email: e.email
+    };
+
 
         res.send("You are logged in now");
 

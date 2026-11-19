@@ -13,6 +13,16 @@ router.get("/", (req, res) => {
 
 router.post("/create", async (req, res) => {
     try {
+
+         const existingStudent = await student.findOne({
+                    email: req.body.email
+                });
+        
+                if (existingStudent) {
+                 res.send(" Student already exists");
+                 console.log("user allready exist")
+                }
+
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
