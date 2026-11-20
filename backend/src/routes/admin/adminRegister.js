@@ -2,6 +2,7 @@ import express from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import admin from "../../model/adminSchema.js";
+import superadmin from "../../model/superadminSchema.js";
 
 const router = express.Router();
 
@@ -13,8 +14,20 @@ router.get("/", (req, res) => {
 
 router.post("/creat", async (req, res) => {
     try {
-           if (!req.session.superadmin) {
-            return res.status(401).send("Please login first");
+
+
+        if (!req.session?.superadmin?.id) {
+            return res.status(401).json({
+                success: false,
+                message: "Please login first"
+            });
+        }
+        const superadminId = req.session.superadmin.id;
+
+        const ad = await superadmin.findById(superadminId);
+
+        if (!ad) {
+            return res.send("Please login First");
         }
 
         const existingAdmin = await admin.findOne({

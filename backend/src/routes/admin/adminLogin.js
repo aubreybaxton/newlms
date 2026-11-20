@@ -12,6 +12,18 @@ router.get("/login", (req, res) => {
 
 router.post("/login", async (req, res) => {
     try {
+        if (!req.session.superadmin) {
+            return res.status(401).send("Please login first");
+        }
+
+        const existingAdmin = await admin.findOne({
+            email: req.body.email
+        });
+
+        if (existingAdmin) {
+            res.send(" Admin already exists");
+            console.log("user allready exist")
+        }
         const e = await admin.findOne({
             email: req.body.email
         });
@@ -40,6 +52,7 @@ router.post("/login", async (req, res) => {
 
         req.session.student = {
 
+            id: e._id,
             name: e.name,
             email: e.email
         };

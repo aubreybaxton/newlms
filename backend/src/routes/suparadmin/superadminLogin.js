@@ -40,7 +40,8 @@ router.post("/login", async (req, res) => {
 
            req.session.superadmin = {
         
-                    id : e.id
+                  id: e._id,
+
                 };
     
     }

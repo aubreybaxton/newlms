@@ -2,6 +2,7 @@ import express from "express";
 import student from "../../model/studentSchema.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import batch from "../../model/batchSchema.js";
 
 const router = express.Router();
 
@@ -41,13 +42,21 @@ router.post("/login", async (req, res) => {
         });
 
         req.session.student = {
-
+            id: e._id,
             name: e.name,
-            email: e.email
+            email: e.email,
+            batch: e.batch
         };
 
+        req.session.save((err) => {
+            if (err) {
+                return res.status(500).send("Session save failed");
+            }
 
-        res.send("You are logged in now");
+            return res.send("You are logged in now");
+        });
+
+      
 
     } catch (error) {
         console.log(error);

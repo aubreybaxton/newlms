@@ -6,6 +6,7 @@ import path from "path";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 
+
 //route connection
 import studentDashboard from "./routes/students/studentDashboard.js";
 import studentRegister from "./routes/students/studentRegister.js";
@@ -23,6 +24,8 @@ import superadminLogin from "./routes/suparadmin/superadminLogin.js";
 import superadminCreat from "./routes/suparadmin/superadminCreat.js"
 
 import qrgenrater from "./routes/qrGenrater/qrGenrater.js"
+
+import attendance from "./routes/attendance/attendace.js";
 const PORT = 3000;
 
 
@@ -67,6 +70,7 @@ app.use("/student", studentDashboard)
 app.use("/admin", adminDashbord)
 app.use("/admin", adminUpdate)
 app.use("/qr", qrgenrater)
+app.use("/attendace", attendance)
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

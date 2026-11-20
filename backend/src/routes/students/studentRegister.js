@@ -13,7 +13,19 @@ router.get("/", (req, res) => {
 
 router.post("/create", async (req, res) => {
     try {
+        if (!req.session?.admin?.id) {
+            return res.status(401).json({
+                success: false,
+                message: "Please login first"
+            });
+        }
+        const adminId = req.session.admin.id;
 
+        const ad = await admin.findById(adminId);
+
+        if (!ad) {
+            return res.send("Please login First");
+        }
         const existingStudent = await student.findOne({
             email: req.body.email
         });
