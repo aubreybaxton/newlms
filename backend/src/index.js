@@ -7,16 +7,22 @@ import cookieParser from "cookie-parser";
 import session from "express-session";
 
 //route connection
-import studentRegister from "./routes/studentRegister.js";
-import studentLogin from "./routes/studentLogin.js";
-import studentDelete from "./routes/studentDelete.js";
-import studentUpdate from "./routes/studentUpdate.js";
-import studentRead from "./routes/studentRead.js";
-import adminRegister from "./routes/adminRegister.js";
-import adminLogin from "./routes/adminLogin.js";
-import superadminLogin from "./routes/superadminLogin.js";
-import superadminCreat from "./routes/superadminCreat.js"
-import studentDashboard from "./routes/studentDashboard.js";
+import studentDashboard from "./routes/students/studentDashboard.js";
+import studentRegister from "./routes/students/studentRegister.js";
+import studentLogin from "./routes/students/studentLogin.js";
+import studentDelete from "./routes/students/studentDelete.js";
+import studentUpdate from "./routes/students/studentUpdate.js";
+import studentRead from "./routes/students/studentRead.js";
+
+import adminRegister from "./routes/admin/adminRegister.js";
+import adminLogin from "./routes/admin/adminLogin.js";
+import adminUpdate from "./routes/admin/adminUpate.js"
+import adminDashbord from "./routes/admin/adminDashbord.js"
+
+import superadminLogin from "./routes/suparadmin/superadminLogin.js";
+import superadminCreat from "./routes/suparadmin/superadminCreat.js"
+
+import qrgenrater from "./routes/qrGenrater/qrGenrater.js"
 const PORT = 3000;
 
 
@@ -39,7 +45,7 @@ app.use(session({
     }
 }));
 
-app.use(express.static(path.join("public")));
+
 
 // student MongoDB connection
 mongoose.connect(process.env.Dbcont)
@@ -58,6 +64,9 @@ app.use("/admin", adminRegister);
 app.use("/superadmin", superadminLogin)
 app.use("/superadmin", superadminCreat)
 app.use("/student", studentDashboard)
+app.use("/admin", adminDashbord)
+app.use("/admin", adminUpdate)
+app.use("/qr", qrgenrater)
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
